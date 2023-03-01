@@ -152,9 +152,9 @@ std::string SimTesting::analyze() {
             if (entry->second.name == "systemTime" && entry->second.type == "int64") {
                 int64_t val;
                 if (record.GetInteger(&val)) {
-                    std::time_t timeval = val / 1000000;
-                    //fmt::print("  {:%Y-%m-%d %H:%M:%S}.{:06}\n",
-                    //        *std::localtime(&timeval), val % 1000000);
+                    // Below doesn't work due to compiler error, skipping for now
+                    //std::time_t timeval = val / 1000000;
+                    //fmt::print("  {:%Y-%m-%d %H:%M:%S}.{:06}\n", *std::localtime(&timeval), val % 1000000);
                 } else {
                     fmt::print("  invalid\n");
                 }
@@ -295,7 +295,7 @@ std::string SimTesting::analyze() {
 
 std::string SimTesting::check() {
     std::cout << "Checking log files" << std::endl;
-    for (int i = 0; i < actualLogLines.size() && i < expectedLogLines.size(); i++) {
+    for (uint i = 0; i < actualLogLines.size() && i < expectedLogLines.size(); i++) {
         if (actualLogLines[i] != expectedLogLines[i]) {
             std::string ret = "Actual log file does not match expected log file\nActual log file line " 
                 + std::to_string(i) + ": \"" + actualLogLines[i] + "\"\n" +
